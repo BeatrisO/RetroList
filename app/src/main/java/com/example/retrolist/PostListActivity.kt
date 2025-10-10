@@ -9,10 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrolist.databinding.ItemPostBinding
 import com.example.retrolist.databinding.RecyclerPostListBinding
 
-class PostList : AppCompatActivity() {
+class PostListActivity : AppCompatActivity() {
 
     private lateinit var binding: RecyclerPostListBinding
 
@@ -31,7 +30,7 @@ class PostList : AppCompatActivity() {
         }
 
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this@PostList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this@PostListActivity)
 
         viewModel.posts.observe(this) { posts ->
             adapter.setPosts(posts)

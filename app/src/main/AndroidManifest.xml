@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetroList">
         <activity
-            android:name=".PostList"
+            android:name=".PostListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
