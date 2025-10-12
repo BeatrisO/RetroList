@@ -39,11 +39,7 @@ class PostListActivity : AppCompatActivity() {
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-
-        viewModel.error.observe(this) { err ->
-            err?.let {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-            }
+        viewModel.error.observe(this) { err -> err?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
         }
     }
 
