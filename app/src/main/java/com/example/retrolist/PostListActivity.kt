@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrolist.databinding.RecyclerPostListBinding
+import com.example.retrolist.databinding.ActivityRecyclerPostListBinding
 
 class PostListActivity : AppCompatActivity() {
 
-    private lateinit var binding: RecyclerPostListBinding
+    private lateinit var binding: ActivityRecyclerPostListBinding
 
     private val adapter = PostAdapter()
     private val viewModel: PostsViewModel by viewModels()
@@ -21,7 +21,7 @@ class PostListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = RecyclerPostListBinding.inflate(layoutInflater)
+        binding = ActivityRecyclerPostListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -39,8 +39,10 @@ class PostListActivity : AppCompatActivity() {
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-        viewModel.error.observe(this) { err -> err?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
+        viewModel.error.observe(this) { err ->
+            err?.let {
+                Toast.makeText(this, "Ocorreu um erro ao carregar os posts", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-
 }
