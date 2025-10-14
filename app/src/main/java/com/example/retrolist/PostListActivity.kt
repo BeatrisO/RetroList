@@ -28,20 +28,22 @@ class PostListActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@PostListActivity)
+            adapter = this@PostListActivity.adapter
 
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this@PostListActivity)
-
+            val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing_16)
+            binding.recyclerView.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+        }
         viewModel.posts.observe(this) { posts ->
             adapter.setPosts(posts)
         }
-
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
         viewModel.error.observe(this) { err ->
             err?.let {
-                Toast.makeText(this, "Ocorreu um erro ao carregar os posts", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Erro ao carregar os posts", Toast.LENGTH_SHORT).show()
             }
         }
     }
