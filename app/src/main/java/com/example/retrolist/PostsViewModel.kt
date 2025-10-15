@@ -17,7 +17,6 @@ class PostsViewModel(private val repo: PostsRepository = PostsRepository()) : Vi
     init {
         fetchPosts()
     }
-
     fun fetchPosts() {
         viewModelScope.launch {
             _loading.value = true
