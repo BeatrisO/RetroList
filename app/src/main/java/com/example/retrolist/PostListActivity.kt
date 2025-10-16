@@ -1,5 +1,6 @@
 package com.example.retrolist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,8 +15,7 @@ import com.example.retrolist.databinding.ActivityRecyclerPostListBinding
 class PostListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecyclerPostListBinding
-
-    private val adapter = PostAdapter()
+    private lateinit var adapter: PostAdapter
     private val viewModel: PostsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,17 +23,21 @@ class PostListActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityRecyclerPostListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        adapter = PostAdapter { post ->
+            val intent = Intent(this, CommentListActivity::class.java)
+            intent.putExtra("POST_ID", post.id)
+            intent.putExtra("POST_TITLE", post.title)
+            startActivity(intent)
+        }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PostListActivity)
             adapter = this@PostListActivity.adapter
-
-            val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing_16)
-            binding.recyclerView.addItemDecoration(SpacesItemDecoration(spacingInPixels))
         }
         viewModel.posts.observe(this) { posts ->
             adapter.setPosts(posts)
