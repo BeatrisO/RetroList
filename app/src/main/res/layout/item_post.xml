@@ -16,7 +16,7 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/tvPostTitle"
+            android:id="@+id/textPostTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Título do Post"
@@ -25,7 +25,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvPostBody"
+            android:id="@+id/textPostBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

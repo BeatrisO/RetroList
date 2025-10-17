@@ -35,16 +35,19 @@ class PostListActivity : AppCompatActivity() {
             intent.putExtra("POST_TITLE", post.title)
             startActivity(intent)
         }
-        binding.recyclerView.apply {
+        binding.recyclerPost.apply {
             layoutManager = LinearLayoutManager(this@PostListActivity)
             adapter = this@PostListActivity.adapter
         }
+
         viewModel.posts.observe(this) { posts ->
             adapter.setPosts(posts)
         }
+
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+        
         viewModel.error.observe(this) { err ->
             err?.let {
                 Toast.makeText(this, "Erro ao carregar os posts", Toast.LENGTH_SHORT).show()
