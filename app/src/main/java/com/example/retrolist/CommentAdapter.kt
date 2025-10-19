@@ -1,13 +1,15 @@
 package com.example.retrolist
 
+import SimpleDiffCallback
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
 import com.example.retrolist.databinding.ItemCommentBinding
-import org.w3c.dom.Comment
 
-class CommentAdapter(private var comments: List<Comment> = emptyList()) :
-    RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
+class CommentAdapter(
+    private var comments: List<Comment> = emptyList()
+) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
     inner class CommentViewHolder(val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -27,7 +29,11 @@ class CommentAdapter(private var comments: List<Comment> = emptyList()) :
     override fun getItemCount(): Int = comments.size
 
     fun setComments(newList: List<Comment>) {
+        val diffCallback = SimpleDiffCallback(comments, newList) { old, new ->
+            old.name == new.name && old.email == new.email
+        }
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         comments = newList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }
