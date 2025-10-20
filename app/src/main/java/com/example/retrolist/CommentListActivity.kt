@@ -12,8 +12,8 @@ import com.example.retrolist.databinding.ActivityCommentListBinding
 class CommentListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCommentListBinding
+    private val adapter = CommentAdapter()
     private val viewModel: CommentListViewModel by viewModels()
-    private lateinit var commentAdapter: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,31 +21,29 @@ class CommentListActivity : AppCompatActivity() {
         binding = ActivityCommentListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { finish() }
-
-        val postId = intent.getIntExtra("POST_ID", 0)
-        val postTitle = intent.getStringExtra("POST_TITLE") ?: "Comentários"
-        supportActionBar?.title = postTitle
-
-        commentAdapter = CommentAdapter()
         binding.recyclerComments.layoutManager = LinearLayoutManager(this)
-        binding.recyclerComments.adapter = commentAdapter
+        binding.recyclerComments.adapter = adapter
+
+        val postId = intent.getIntExtra("POST_ID", -1)
+        if (postId != -1) {
+            viewModel.fetchComments(postId)
+        } else {
+            Toast.makeText(this, "Erro: ID do post inválido", Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         viewModel.comments.observe(this) { comments ->
-            commentAdapter.setComments(comments)
+            adapter.setComments(comments)
         }
 
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBarComments.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        viewModel.error.observe(this) { errorMsg ->
-            errorMsg?.let {
-                Toast.makeText(this, "Erro ao carregar comentários: $it", Toast.LENGTH_SHORT).show()
+        viewModel.error.observe(this) { error ->
+            error?.let {
+                Toast.makeText(this, "Erro ao carregar comentários", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.getComments(postId)
     }
 }
