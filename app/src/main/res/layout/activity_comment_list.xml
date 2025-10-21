@@ -16,10 +16,11 @@
         android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
         app:title="Comentários do Post"
         app:titleTextColor="@android:color/white"
-        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIcon="@drawable/ic_arrow_back_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerComments"
