@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -13,26 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textCommentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="#222222"
+            android:ellipsize="end"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/textCommentEmail"
-            android:textColor="#777"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#111111"
+            android:textStyle="italic"
+            android:paddingTop="4dp"/>
 
         <TextView
             android:id="@+id/textCommentBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"/>
+            android:paddingTop="8dp"
+            android:textColor="#333333"
+            android:textSize="14sp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
