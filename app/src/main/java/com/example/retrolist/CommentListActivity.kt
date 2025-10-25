@@ -26,12 +26,14 @@ class CommentListActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
         binding.toolbar.navigationIcon?.setTint(Color.WHITE)
+
+        val postTitle = intent.getStringExtra("POST_TITLE") ?: "Post"
+        supportActionBar?.title = "Comentários sobre: ${postTitle.take(40)}"
+
 
         binding.recyclerComments.layoutManager = LinearLayoutManager(this)
         binding.recyclerComments.adapter = adapter
