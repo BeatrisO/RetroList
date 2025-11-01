@@ -32,8 +32,7 @@ class CommentListActivity : AppCompatActivity() {
         binding.toolbar.navigationIcon?.setTint(Color.WHITE)
 
         val postTitle = intent.getStringExtra("POST_TITLE") ?: "Post"
-        supportActionBar?.title = "Comentários sobre: ${postTitle.take(40)}"
-
+        supportActionBar?.title = postTitle.take(25) + if (postTitle.length > 25) "..." else ""
 
         binding.recyclerComments.layoutManager = LinearLayoutManager(this)
         binding.recyclerComments.adapter = adapter
@@ -48,6 +47,14 @@ class CommentListActivity : AppCompatActivity() {
 
         viewModel.comments.observe(this) { comments ->
             adapter.setComments(comments)
+
+            val shortTitle = if (postTitle.length > 25) postTitle.take(25) + "..." else postTitle
+            val commentCount = comments.size
+
+            supportActionBar?.apply {
+                title = shortTitle
+                subtitle = "$commentCount comentários"
+            }
         }
 
         viewModel.loading.observe(this) { isLoading ->
